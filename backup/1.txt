@@ -1,0 +1,14 @@
+mkdir Stepanova
+cd Stepanova
+mkdir theory
+cd theory
+touch full.txt increment.txt diff.txt
+echo Полное резервное копирование в Handy Backup – это копирование всех данных из исходного набора, независимо от того, изменялись ли данные после предыдущего копирования. > full.txt
+echo Инкрементная резервная копия - это копия всех данных базы данных, которые изменились со времени последней успешной операции полного резервного копирования. > increment.txt
+echo Дифференциальное резервное копирование - это метод, при котором изменения сохраняются по отношению к последней полной резервной копии. > diff.txt
+cd Stepanova
+mkdir backup
+cd backup
+tar -cvf backup.tar ~Stepanova/theory
+echo Для создания инкрементных архивов tar использует специальный файл метаданных, куда записывает состояние архивируемых файлов, впоследствии набор данных сравнивается с метаданными и в архив помещаются только новые или измененные файлы, а метаданные обновляются. >> ~/Stepanova/theory/increment.txt
+tar --create --gzip --file=incbackup.tgz --listed-incremental=incbackup.snar ~/Stepanova/backup
